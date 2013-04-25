@@ -39,7 +39,13 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>api</artifactId>
             <version>${project.version}</version>
-        </dependency>  
+        </dependency>
+        
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>1.8.3</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -94,7 +100,7 @@
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.14</version>
                 <configuration>
-                        <scanIntervalSeconds>5</scanIntervalSeconds>
+                        <scanIntervalSeconds>60</scanIntervalSeconds>
                 </configuration>
             </plugin>
         </plugins>
