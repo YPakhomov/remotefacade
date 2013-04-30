@@ -6,13 +6,29 @@
        xmlns="http://www.springframework.org/schema/beans"> 
     
     <bean id="simpleFacade" class="net.griddynamics.server.SimpleFacade">
-        <property name="firstService"><bean class="net.griddynamics.server.FirstService"/></property>
-        <property name="secondService"><bean class="net.griddynamics.server.SecondService"/></property> 
+        <property name="firstService"><bean class="net.griddynamics.server.services.FirstService"/></property>
+        <property name="secondService"><bean class="net.griddynamics.server.services.SecondService"/></property> 
     </bean> 
-    
+        
     <bean name="/SimpleFacade.hessian" class="org.springframework.remoting.caucho.HessianServiceExporter" > 
         <property name="service" ref="simpleFacade"/> 
         <property name="serviceInterface" value="net.griddynamics.api.Facade"/> 
+    </bean> 
+    
+    
+    <!-- Approach3 -->
+    
+    <bean id="serverContextBean" class="net.griddynamics.server.ServerContext">
+        <property name="productService"><bean class="net.griddynamics.server.services.SimpleProductService"/></property>
+    </bean>
+    
+    <bean id="simpleCommandFacade" class="net.griddynamics.server.SimpleCommandFacade">
+        <property name="context" ref="serverContextBean"/>
+    </bean> 
+    
+    <bean name="/SimpleCommandFacade.hessian" class="org.springframework.remoting.caucho.HessianServiceExporter" > 
+        <property name="service" ref="simpleCommandFacade"/> 
+        <property name="serviceInterface" value="net.griddynamics.api.approach3.CommandFacade"/> 
     </bean> 
 </beans>
 

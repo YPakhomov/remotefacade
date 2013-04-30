@@ -5,6 +5,7 @@
 package net.griddynamics.api;
 
 import javax.script.ScriptException;
+import net.griddynamics.api.approach3.commands.Command;
 
 /**
  *

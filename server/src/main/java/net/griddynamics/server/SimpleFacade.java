@@ -4,12 +4,11 @@
  */
 package net.griddynamics.server;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import net.griddynamics.server.services.FirstService;
+import net.griddynamics.server.services.SecondService;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import javax.sql.rowset.serial.SerialException;
 import net.griddynamics.api.Facade;
 import net.griddynamics.api.ServiceException;
 import org.springframework.beans.factory.annotation.Required;
@@ -42,7 +41,7 @@ public class SimpleFacade implements Facade{
         }
     }
     
-        
+           
     @Required
     public void setFirstService(FirstService firstService) {
         this.firstService = firstService;

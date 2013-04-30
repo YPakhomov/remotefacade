@@ -9,4 +9,9 @@
         <property name="serviceUrl" value="http://localhost:8080/server/SimpleFacade.hessian" /> 
         <property name="serviceInterface" value="net.griddynamics.api.Facade" /> 
     </bean> 
+    
+    <bean class="org.springframework.remoting.caucho.HessianProxyFactoryBean" id="commandFacade"> 
+        <property name="serviceUrl" value="http://localhost:8080/server/SimpleCommandFacade.hessian" /> 
+        <property name="serviceInterface" value="net.griddynamics.api.approach3.CommandFacade" /> 
+    </bean> 
 </beans>
