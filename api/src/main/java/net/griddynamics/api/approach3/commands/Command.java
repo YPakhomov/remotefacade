@@ -5,7 +5,7 @@
 package net.griddynamics.api.approach3.commands;
 
 import java.io.Serializable;
-import net.griddynamics.api.approach3.Context;
+import net.griddynamics.api.approach3.Visitor;
 
 
 /**
@@ -13,5 +13,7 @@ import net.griddynamics.api.approach3.Context;
  * @author one
  */
 public interface Command<T> extends Serializable{
-    T exec(Context context);
+    public void accept(Visitor v);
+    public void setResult(T result);
+    public T getResult();
 }

@@ -4,10 +4,14 @@
  */
 package net.griddynamics.server.services;
 
-import net.griddynamics.api.approach3.servicesinterfaces.ProductService;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import net.griddynamics.api.approach3.Product;
+import net.griddynamics.api.approach3.servicesinterfaces.ProductService;
 
 /**
  *
@@ -15,11 +19,38 @@ import net.griddynamics.api.approach3.Product;
  */
 public class SimpleProductService implements ProductService {
     private static final Set<Product> products = new HashSet<Product>();
-    static final Product notFound = new Product(0, "Not Found !");
-    static{
-        products.add(new Product(1, "cola"));
-        products.add(new Product(2, "twix"));
-        products.add(new Product(3, "fish"));
+    static final Product NOT_FOUND = new Product(0, "Not Found !");
+
+    
+    public SimpleProductService() {
+        init();
+    }
+    
+    private void init(){
+        FileReader sourceFileReader;
+        try {
+            String sourceName = "prods.txt";      
+            sourceFileReader = new FileReader(sourceName);
+        } catch (FileNotFoundException ex){
+            System.err.println(ex);
+            ex.printStackTrace(System.err);
+            return;
+        }
+        
+        try {            
+            BufferedReader br = new BufferedReader(sourceFileReader);
+            for (String line = br.readLine();  line != null; line = br.readLine()) {
+                String[] res = line.split(":");
+                int id = Integer.parseInt(res[0].trim());
+                String name = res[1].trim();
+                System.err.println("id : "  + id + " name: " + name);
+                Product product = new Product(id, name);
+                products.add(product);
+            }
+        } catch (IOException ex) {
+            System.err.println(ex);
+            ex.printStackTrace(System.err);
+        }        
     }
     
     @Override
@@ -29,7 +60,7 @@ public class SimpleProductService implements ProductService {
                 return p;
             }
         }
-        return notFound;
+        return NOT_FOUND;
     }
     
     @Override
@@ -39,7 +70,7 @@ public class SimpleProductService implements ProductService {
                 return p;
             }
         }
-        return notFound;
+        return NOT_FOUND;
     }
     
    
@@ -47,24 +78,5 @@ public class SimpleProductService implements ProductService {
     public Set<Product> getAllProducts(){
         return new HashSet<Product>(products);
     }
-    
-    
-    @Override
-    public boolean addProduct(Product product){
-        return products.add(product);
-    }
-    
-    
-    @Override
-    public boolean deleteProduct(Product product){
-        return products.remove(product);
-    }
-    
-    @Override
-    public boolean updateProduct(Product product){
-        if(products.remove(product)){
-            return products.add(product);
-        }
-        return false;
-    }
+        
 }

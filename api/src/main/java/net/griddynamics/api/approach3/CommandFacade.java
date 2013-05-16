@@ -4,7 +4,6 @@
  */
 package net.griddynamics.api.approach3;
 
-import java.util.Collection;
 import net.griddynamics.api.approach3.commands.Command;
 
 /**
@@ -12,5 +11,5 @@ import net.griddynamics.api.approach3.commands.Command;
  * @author one
  */
 public interface CommandFacade {
-    public <T> T executeRemotely(Command<T> command);
+    public <T> Command<T> executeRemotely(Command<T> command);
 }

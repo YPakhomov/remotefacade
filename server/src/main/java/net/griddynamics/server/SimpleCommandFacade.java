@@ -4,8 +4,12 @@
  */
 package net.griddynamics.server;
 
+import java.util.ArrayList;
+import java.util.List;
 import net.griddynamics.api.approach3.CommandFacade;
+import net.griddynamics.api.approach3.Visitor;
 import net.griddynamics.api.approach3.commands.Command;
+import net.griddynamics.api.approach3.commands.CommandList;
 import org.springframework.beans.factory.annotation.Required;
 
 /**
@@ -15,13 +19,17 @@ import org.springframework.beans.factory.annotation.Required;
 public class SimpleCommandFacade implements CommandFacade{
     private ServerContext context;
             
-    @Override
-    public <T> T executeRemotely(Command<T> command) {
-        return command.exec(context);
-    }
-
     @Required
     public void setContext(ServerContext context) {
         this.context = context;
+    }
+
+     
+
+    @Override
+    public <T> Command<T> executeRemotely(Command<T> command) {
+        Visitor cv = new CommandVisitor(context);
+        command.accept(cv);
+        return  command;
     }
 }

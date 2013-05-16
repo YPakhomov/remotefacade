@@ -4,7 +4,6 @@
  */
 package net.griddynamics.api.approach3;
 
-import net.griddynamics.api.approach3.Product;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -16,9 +15,9 @@ public class Store implements Serializable{
     private int id;
     private String name;
     private String district;
-    private Collection<Product> products;
+    private final Collection<Integer> products;
 
-    public Store(int id, String name, String district, Collection<Product> products) {
+    public Store(int id, String name, String district, Collection<Integer> products) {
         this.id = id;
         this.name = name;
         this.district = district;
@@ -37,7 +36,7 @@ public class Store implements Serializable{
         return district;
     }
 
-    public Collection<Product> getProducts() {
+    public Collection<Integer> getProducts() {
         return products;
     }
 
