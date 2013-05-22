@@ -18,7 +18,7 @@ public class Forward<T> implements Command<T>{
     }
     
     public void accept(Visitor v) {
-        v.visit(this);
+        //v.visit(this); //
     }
 
     public T getResult() {

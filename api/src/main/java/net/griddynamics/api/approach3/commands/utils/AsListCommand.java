@@ -21,15 +21,15 @@ public class AsListCommand<T> implements Command<List<T>>{
     }
         
     public void accept(Visitor v) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //nothing to do
     }
 
     public void setResult(List<T> result) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        list = result;
     }
 
     public List<T> getResult() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return list;
     }
     
 }

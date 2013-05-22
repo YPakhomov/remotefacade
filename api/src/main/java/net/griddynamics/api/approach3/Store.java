@@ -65,7 +65,5 @@ public class Store implements Serializable{
     @Override
     public String toString() {
         return "Store{" + "id=" + id + ", name=" + name + ", district=" + district + ", products=" + products + '}';
-    }
-    
-    
+    }   
 }

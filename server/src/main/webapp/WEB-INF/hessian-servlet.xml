@@ -20,6 +20,7 @@
     
     <bean id="serverContextBean" class="net.griddynamics.server.ServerContext">
         <property name="productService"><bean class="net.griddynamics.server.services.SimpleProductService"/></property>
+        <property name="storeService"><bean class="net.griddynamics.server.services.SimpleStoreService"/></property>
     </bean>
     
     <bean id="simpleCommandFacade" class="net.griddynamics.server.SimpleCommandFacade">

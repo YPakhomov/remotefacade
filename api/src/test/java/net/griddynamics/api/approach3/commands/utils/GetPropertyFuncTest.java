@@ -47,7 +47,7 @@ public class GetPropertyFuncTest {
         Product param = new Product(15, "testParam");
         GetPropertyFunc<Product,String> instance = new GetPropertyFunc<Product,String>("name");
         
-        String result = instance.apply(param, null);
+        String result = instance.apply(param);
         assertEquals(expResult, result);
         System.out.println(result);
     }
@@ -59,7 +59,7 @@ public class GetPropertyFuncTest {
         Product param = new Product(150, "testParam");
         GetPropertyFunc<Product,Integer> instance = new GetPropertyFunc<Product,Integer>("id");
         
-        Integer result = instance.apply(param, null);
+        Integer result = instance.apply(param);
         assertEquals(expResult, result);
         
         System.out.println(result);

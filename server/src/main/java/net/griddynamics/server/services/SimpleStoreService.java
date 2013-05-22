@@ -11,15 +11,14 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import net.griddynamics.api.approach3.Product;
 import net.griddynamics.api.approach3.Store;
-import net.griddynamics.api.approach3.servicesinterfaces.ProductService;
+import net.griddynamics.api.approach3.servicesinterfaces.StoreService;
 
 /**
  *
  * @author one
  */
-public class SimpleStoreService {
+public class SimpleStoreService implements StoreService{
 
     private static final Set<Store> stores = new HashSet<Store>();
     private static final Store NOT_FOUND = new Store(0, "Not Found!", "None", Collections.EMPTY_SET);
@@ -38,7 +37,7 @@ public class SimpleStoreService {
     private void init() {
         FileReader sourceFileReader;
         try {
-            String sourceName = "prods.txt";
+            String sourceName = "stores.txt";
             sourceFileReader = new FileReader(sourceName);
         } catch (FileNotFoundException ex) {
             System.err.println(ex);
@@ -50,6 +49,7 @@ public class SimpleStoreService {
             BufferedReader br = new BufferedReader(sourceFileReader);
             for (String line = br.readLine(); line != null; line = br.readLine()) {
                 String[] res = line.split(":");
+                
                 int id = Integer.parseInt(res[0].trim());
                 String name = res[1].trim();
                 String location = res[2].trim();
@@ -59,6 +59,7 @@ public class SimpleStoreService {
                 }
                 Store store = new Store(id, name, location, products);
                 stores.add(store);
+                System.err.println(store);
             }
         } catch (IOException ex) {
             System.err.println(ex);
@@ -66,6 +67,7 @@ public class SimpleStoreService {
         }
     }
 
+    @Override
     public Store getStoreByID(int id) {
         for (Store s : stores) {
             if (s.getId() == id) {
@@ -74,8 +76,11 @@ public class SimpleStoreService {
         }
         return NOT_FOUND;
     }
-
+    
+    @Override
     public Set<Store> getAllStores() {
+        if(stores == null)
+            return Collections.EMPTY_SET;
         return new HashSet<Store>(stores);
     }
 

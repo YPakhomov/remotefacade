@@ -5,6 +5,7 @@
 package net.griddynamics.api.approach3;
 
 import net.griddynamics.api.approach3.servicesinterfaces.ProductService;
+import net.griddynamics.api.approach3.servicesinterfaces.StoreService;
 
 /**
  *
@@ -12,7 +13,7 @@ import net.griddynamics.api.approach3.servicesinterfaces.ProductService;
  */
 public interface Context {
     public ProductService getProductService();
-    
+    public StoreService getStoreService();
     //public <T> T getParameter(Class<T> cl);
     //public boolean putParameter(Object param);
 }

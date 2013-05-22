@@ -6,7 +6,6 @@ package net.griddynamics.api.approach3.commands.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import net.griddynamics.api.approach3.Context;
 
 /**
  *
@@ -20,7 +19,7 @@ public class GetPropertyFunc<T, V> implements Function<T, V> {
         this.propertyName = propertyName;
     }
 
-    public V apply(T param, Context context) {
+    public V apply(T param) {
         Method getter = null;
         try {
             getter = param.getClass().getDeclaredMethod("get"

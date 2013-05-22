@@ -12,7 +12,8 @@ import net.griddynamics.api.approach3.Store;
  * @author one
  */
 public interface StoreService {
-    Set<Store> findProduct(int id);
-    Set<Store> findProduct(int id, String district);
+    
+    public Store getStoreByID(int id);
+    public Set<Store> getAllStores();
     
 }

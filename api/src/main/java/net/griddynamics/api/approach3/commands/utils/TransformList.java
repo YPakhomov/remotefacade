@@ -4,6 +4,7 @@
  */
 package net.griddynamics.api.approach3.commands.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import net.griddynamics.api.approach3.Visitor;
 import net.griddynamics.api.approach3.commands.Command;
@@ -14,7 +15,19 @@ import net.griddynamics.api.approach3.commands.Command;
  */
 public class TransformList<T,V> implements Command<List<V>>{
     private Command<List<T>> source;
-    private Function<T,V> mapper;
+    private Function<T,V> mapper; //something ?
+    
+    private List<V> resultList;
+
+    public Command<List<T>> getSource() {
+        return source;
+    }
+
+    public Function<T, V> getMapper() {
+        return mapper;
+    }
+    
+    
 
     public TransformList(Command<List<T>> source, Function<T, V> mapFunc) {
         this.source = source;
@@ -22,15 +35,14 @@ public class TransformList<T,V> implements Command<List<V>>{
     }
 
     public void accept(Visitor v) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        v.visit(this);
     }
 
     public void setResult(List<V> result) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        resultList = new ArrayList<V>(result);
     }
 
     public List<V> getResult() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-        
+        return new ArrayList<V>(resultList);
+    }        
 }

@@ -4,9 +4,9 @@
  */
 package net.griddynamics.server;
 
-import java.util.HashMap;
 import net.griddynamics.api.approach3.Context;
 import net.griddynamics.api.approach3.servicesinterfaces.ProductService;
+import net.griddynamics.api.approach3.servicesinterfaces.StoreService;
 import org.springframework.beans.factory.annotation.Required;
 
 /**
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Required;
  */
 class ServerContext implements Context{
     private ProductService productService;
-
+    private StoreService storeService;
        
     @Override
     public ProductService getProductService() {
@@ -25,5 +25,15 @@ class ServerContext implements Context{
     @Required
     public void setProductService(ProductService productService) {
         this.productService = productService;
+    }
+
+    @Override
+    public StoreService getStoreService() {
+        return storeService;
+    }
+    
+    @Required
+    public void setStoreService(StoreService storeService) {
+        this.storeService = storeService;
     }
 }
