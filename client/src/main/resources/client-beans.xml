@@ -6,7 +6,7 @@
        xmlns="http://www.springframework.org/schema/beans"> 
     
     <bean class="org.springframework.remoting.caucho.HessianProxyFactoryBean" id="facade"> 
-        <property name="serviceUrl" value="http://localhost:8080/server/SimpleFacade.hessian" /> 
+        <property name="serviceUrl" value="http://localhost:8080/server/ScriptFacade.hessian" /> 
         <property name="serviceInterface" value="net.griddynamics.api.Facade" /> 
     </bean> 
     

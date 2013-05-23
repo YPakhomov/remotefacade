@@ -5,13 +5,15 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns="http://www.springframework.org/schema/beans"> 
     
-    <bean id="simpleFacade" class="net.griddynamics.server.SimpleFacade">
-        <property name="firstService"><bean class="net.griddynamics.server.services.FirstService"/></property>
-        <property name="secondService"><bean class="net.griddynamics.server.services.SecondService"/></property> 
+    
+    <!-- Script engine approach -->
+    <bean id="scriptFacade" class="net.griddynamics.server.ScriptFacade">
+        <property name="productService"><bean class="net.griddynamics.server.services.SimpleProductService"/></property>
+        <property name="storeService"><bean class="net.griddynamics.server.services.SimpleStoreService"/></property> 
     </bean> 
         
-    <bean name="/SimpleFacade.hessian" class="org.springframework.remoting.caucho.HessianServiceExporter" > 
-        <property name="service" ref="simpleFacade"/> 
+    <bean name="/ScriptFacade.hessian" class="org.springframework.remoting.caucho.HessianServiceExporter" > 
+        <property name="service" ref="scriptFacade"/> 
         <property name="serviceInterface" value="net.griddynamics.api.Facade"/> 
     </bean> 
     

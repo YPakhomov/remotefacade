@@ -11,6 +11,8 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import net.griddynamics.api.Facade;
 import net.griddynamics.api.ServiceException;
+import net.griddynamics.api.approach3.servicesinterfaces.ProductService;
+import net.griddynamics.api.approach3.servicesinterfaces.StoreService;
 import org.springframework.beans.factory.annotation.Required;
 
 
@@ -19,36 +21,33 @@ import org.springframework.beans.factory.annotation.Required;
  *
  * @author one
  */
-public class SimpleFacade implements Facade{
-    private FirstService firstService;
-    private SecondService secondService;
+public class ScriptFacade implements Facade{
+    private ProductService productService;
+    private StoreService storeService;
 
-    @Override
-    public int getAndCalculate(String name) {
-        return secondService.calculate(firstService.getID(name));
-    }
     
     @Override
     public Object runScript(String script) throws ServiceException{
         ScriptEngineManager factory = new ScriptEngineManager();
         ScriptEngine engine = factory.getEngineByName("groovy");
-        engine.put("serv1", firstService);
-        engine.put("serv2", secondService);
+        engine.put("productService", productService);
+        engine.put("storeService", storeService);
         try {
             return engine.eval(script);
         } catch (ScriptException ex){
             throw new ServiceException(ex.getMessage());
         }
     }
-    
-           
+
     @Required
-    public void setFirstService(FirstService firstService) {
-        this.firstService = firstService;
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+        //productService.
     }
-    
+
     @Required
-    public void setSecondService(SecondService secondService) {
-        this.secondService = secondService;
+    public void setStoreService(StoreService storeService) {
+        this.storeService = storeService;
     }
+        
 }
