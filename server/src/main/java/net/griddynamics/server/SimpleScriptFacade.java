@@ -4,12 +4,10 @@
  */
 package net.griddynamics.server;
 
-import net.griddynamics.server.services.FirstService;
-import net.griddynamics.server.services.SecondService;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import net.griddynamics.api.Facade;
+import net.griddynamics.api.script.ScriptFacade;
 import net.griddynamics.api.ServiceException;
 import net.griddynamics.api.approach3.servicesinterfaces.ProductService;
 import net.griddynamics.api.approach3.servicesinterfaces.StoreService;
@@ -21,7 +19,7 @@ import org.springframework.beans.factory.annotation.Required;
  *
  * @author one
  */
-public class ScriptFacade implements Facade{
+public class SimpleScriptFacade implements ScriptFacade{
     private ProductService productService;
     private StoreService storeService;
 

@@ -5,20 +5,32 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns="http://www.springframework.org/schema/beans"> 
     
+    <!-- Simple facade approach -->
+    
+    <bean id="simpleFacade" class="net.griddynamics.server.SimpleFacade">
+        <property name="productService"><bean class="net.griddynamics.server.services.SimpleProductService"/></property>
+        <property name="storeService"><bean class="net.griddynamics.server.services.SimpleStoreService"/></property> 
+    </bean>
+    
+    <bean name="/SimpleFacade.hessian" class="org.springframework.remoting.caucho.HessianServiceExporter" > 
+        <property name="service" ref="simpleFacade"/> 
+        <property name="serviceInterface" value="net.griddynamics.api.Facade"/> 
+    </bean> 
+    
     
     <!-- Script engine approach -->
-    <bean id="scriptFacade" class="net.griddynamics.server.ScriptFacade">
+    <bean id="scriptFacade" class="net.griddynamics.server.SimpleScriptFacade">
         <property name="productService"><bean class="net.griddynamics.server.services.SimpleProductService"/></property>
         <property name="storeService"><bean class="net.griddynamics.server.services.SimpleStoreService"/></property> 
     </bean> 
         
     <bean name="/ScriptFacade.hessian" class="org.springframework.remoting.caucho.HessianServiceExporter" > 
         <property name="service" ref="scriptFacade"/> 
-        <property name="serviceInterface" value="net.griddynamics.api.Facade"/> 
+        <property name="serviceInterface" value="net.griddynamics.api.script.ScriptFacade"/> 
     </bean> 
     
     
-    <!-- Approach3 -->
+    <!-- Comman facade Approach3 -->
     
     <bean id="serverContextBean" class="net.griddynamics.server.ServerContext">
         <property name="productService"><bean class="net.griddynamics.server.services.SimpleProductService"/></property>

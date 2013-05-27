@@ -19,7 +19,7 @@ import net.griddynamics.api.approach3.servicesinterfaces.ProductService;
  */
 public class SimpleProductService implements ProductService {
     private static final Set<Product> products = new HashSet<Product>();
-    static final Product NOT_FOUND = new Product(0, "Not Found !");
+    public static final Product NOT_FOUND = new Product(0, "Not Found !");
 
     
     public SimpleProductService() {
