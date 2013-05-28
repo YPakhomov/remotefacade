@@ -22,14 +22,7 @@ public class SimpleStoreService implements StoreService{
 
     private static final Set<Store> stores = new HashSet<Store>();
     private static final Store NOT_FOUND = new Store(0, "Not Found!", "None", Collections.EMPTY_SET);
-    
-    
-//    static {
-//        stores.add(new Store(1, "key", "A", new HashSet<Product>()));
-//        stores.add(new Store(2, "jug", "A", new HashSet<Product>()));
-//        stores.add(new Store(3, "key", "B", new HashSet<Product>()));
-//    }
-    
+        
     public SimpleStoreService(){
         init();
     }
@@ -40,9 +33,7 @@ public class SimpleStoreService implements StoreService{
             String sourceName = "stores.txt";
             sourceFileReader = new FileReader(sourceName);
         } catch (FileNotFoundException ex) {
-            System.err.println(ex);
-            ex.printStackTrace(System.err);
-            return;
+            throw new RuntimeException(ex);
         }
 
         try {
@@ -59,11 +50,9 @@ public class SimpleStoreService implements StoreService{
                 }
                 Store store = new Store(id, name, location, products);
                 stores.add(store);
-                System.err.println(store);
             }
         } catch (IOException ex) {
-            System.err.println(ex);
-            ex.printStackTrace(System.err);
+            throw new RuntimeException(ex);
         }
     }
 
@@ -83,5 +72,4 @@ public class SimpleStoreService implements StoreService{
             return Collections.EMPTY_SET;
         return new HashSet<Store>(stores);
     }
-
 }

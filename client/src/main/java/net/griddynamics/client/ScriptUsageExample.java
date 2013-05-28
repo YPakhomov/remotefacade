@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
-public class ClientStart{
+public class ScriptUsageExample{
     public static void main( String[] args ) throws ScriptException, ServiceException{
         ApplicationContext context = new ClassPathXmlApplicationContext("client-beans.xml");
         ScriptFacade f = context.getBean("scriptFacade", ScriptFacade.class);

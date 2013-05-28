@@ -18,6 +18,8 @@ import net.griddynamics.api.approach3.commands.FindAppropriateStores;
 import net.griddynamics.api.approach3.commands.GetProductByIDCommand;
 import net.griddynamics.api.approach3.commands.GetProducts;
 import net.griddynamics.api.approach3.commands.utils.TransformList;
+import net.griddynamics.server.services.SimpleProductService;
+
 
 /**
  *
@@ -48,13 +50,13 @@ public class CommandVisitor<T> implements Visitor {
     public void visit(CommandList cmdList) {
         List<Command<?>> commands = cmdList.getCommandList();
 
-        List<Command<?>> resList = new ArrayList<Command<?>>(commands.size());
+        List<Command<?>> resultList = new ArrayList<Command<?>>(commands.size());
 
         for (Command c : commands) {
             c.accept(this);
-            resList.add(c);
+            resultList.add(c);
         }
-        cmdList.setResult(resList);
+        cmdList.setResult(resultList);
     }
 
     @Override
@@ -63,10 +65,14 @@ public class CommandVisitor<T> implements Visitor {
         idsCommand.accept(this);
 
         List<Integer> idList = idsCommand.getResult();
-        //TODO some check for npe       
+        
         List<Product> resultList = new ArrayList<Product>(idsCommand.getResult().size());
+        
         for (Integer id : idsCommand.getResult()) {
-            resultList.add(context.getProductService().getProductByID(id));
+            Product product = context.getProductService().getProductByID(id);
+            if( ! product.equals(SimpleProductService.NOT_FOUND)){
+                 resultList.add(product);
+            }
         }
         getProducts.setResult(resultList);
     }
@@ -85,12 +91,10 @@ public class CommandVisitor<T> implements Visitor {
         for (Store s : stores) {
             boolean containsAll = true;
             Set<Integer> products = new HashSet<Integer>(s.getProducts());
-            System.err.println(s);
             for (Integer i : ids) {
-                System.err.println(i + " " + products.contains(i));
                 if (!products.contains(i)) {
                     containsAll = false;
-                    //break;
+                    break;
                 }
             }
             if(containsAll){
@@ -103,9 +107,7 @@ public class CommandVisitor<T> implements Visitor {
     @Override
     public void visit(TransformList transformList) {
         Command sourceCommand = transformList.getSource();
-       // if(sourceCommand.getResult() == null){ // check for npe, causes  npe :)
-       //     sourceCommand.accept(this);
-       // }
+       
         sourceCommand.accept(this);
         
         List sourseList = (List)sourceCommand.getResult();

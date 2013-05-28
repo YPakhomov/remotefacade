@@ -32,9 +32,7 @@ public class SimpleProductService implements ProductService {
             String sourceName = "prods.txt";      
             sourceFileReader = new FileReader(sourceName);
         } catch (FileNotFoundException ex){
-            System.err.println(ex);
-            ex.printStackTrace(System.err);
-            return;
+            throw new RuntimeException(ex);
         }
         
         try {            
@@ -43,13 +41,11 @@ public class SimpleProductService implements ProductService {
                 String[] res = line.split(":");
                 int id = Integer.parseInt(res[0].trim());
                 String name = res[1].trim();
-                System.err.println("id : "  + id + " name: " + name);
                 Product product = new Product(id, name);
                 products.add(product);
             }
         } catch (IOException ex) {
-            System.err.println(ex);
-            ex.printStackTrace(System.err);
+            throw new RuntimeException(ex);
         }        
     }
     
@@ -78,5 +74,4 @@ public class SimpleProductService implements ProductService {
     public Set<Product> getAllProducts(){
         return new HashSet<Product>(products);
     }
-        
 }

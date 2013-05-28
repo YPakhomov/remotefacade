@@ -18,7 +18,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author one
  */
 public class RemoteFacadeHelper {
-    public static void executeRemotely(Command<?>... commands) {
+    public void executeRemotely(Command<?>... commands) {
         ApplicationContext context = new ClassPathXmlApplicationContext("client-beans.xml");
         CommandFacade f = context.getBean("commandFacade", CommandFacade.class);
 
