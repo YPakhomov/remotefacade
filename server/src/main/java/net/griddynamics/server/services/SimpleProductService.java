@@ -25,11 +25,11 @@ public class SimpleProductService implements ProductService {
 
     
     public SimpleProductService() {
-        //init();
+        init();
     }
     
     private void init(){
-        InputStream storeStream = getClass().getResourceAsStream("/stores.txt");
+        InputStream storeStream = getClass().getResourceAsStream("/prods.txt");
         try {            
             BufferedReader br = new BufferedReader(new InputStreamReader(storeStream));
             for (String line = br.readLine();  line != null; line = br.readLine()) {

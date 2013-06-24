@@ -33,7 +33,7 @@ public class SimpleScriptFacade implements ScriptFacade{
         try {
             return engine.eval(script);
         } catch (ScriptException ex){
-            throw new ServiceException(ex.getMessage());
+            throw new ServiceException(ex);
         }
     }
 

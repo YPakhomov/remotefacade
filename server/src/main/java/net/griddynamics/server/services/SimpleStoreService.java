@@ -26,12 +26,12 @@ public class SimpleStoreService implements StoreService {
     private static final Store NOT_FOUND = new Store(0, "Not Found!", "None", Collections.EMPTY_SET);
 
     public SimpleStoreService() {
-        //init();
+        init();
     }
 
     private void init() {
         InputStream prodStream;
-        prodStream = getClass().getResourceAsStream("/prods.txt");
+        prodStream = getClass().getResourceAsStream("/stores.txt");
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(prodStream));
             for (String line = br.readLine(); line != null; line = br.readLine()) {

@@ -4,20 +4,12 @@
  */
 package net.griddynamics.client;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import net.griddynamics.api.Facade;
+import net.griddynamics.api.ServiceException;
 import net.griddynamics.api.approach3.Product;
-import net.griddynamics.api.approach3.Store;
-import net.griddynamics.api.approach3.commands.Command;
-import net.griddynamics.api.approach3.commands.FindAppropriateStores;
-import net.griddynamics.api.approach3.commands.Forward;
-import net.griddynamics.api.approach3.commands.GetProducts;
-import net.griddynamics.api.approach3.commands.utils.GetPropertyFunc;
-import net.griddynamics.api.approach3.commands.utils.TransformList;
+import net.griddynamics.api.script.ScriptFacade;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.junit.After;
@@ -33,76 +25,63 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *
  * @author one
  */
-public class CommandApproachTest {
-
+public class ScriptFacadeTest {
+    
     private static RemoteFacadeHelper remoteFacadeHelper;
     private static Facade simpleFacade;
     private static Server server;
-
-    public CommandApproachTest() {
+    
+    public ScriptFacadeTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() throws Exception {
         remoteFacadeHelper = new RemoteFacadeHelper();
         ApplicationContext context = new ClassPathXmlApplicationContext("client-beans.xml");
         simpleFacade = context.getBean("simpleFacade", Facade.class);
         
-        //------Jetty start        
+        //------Jetty start------        
         server = new Server(8080);
         WebAppContext root = new WebAppContext();
         
         root.setWar("./../server/target/server-1.0-SNAPSHOT.war");
-        //root.setWar("./../server/src/main/webapp"); // some classpath problems
         root.setContextPath("/server");
         
         server.setHandler(root);
         server.start();
     }
-
+    
     @AfterClass
     public static void tearDownClass() throws Exception {
         server.stop();
     }
-
+    
     @Before
     public void setUp() {
     }
-
+    
     @After
     public void tearDown() {
     }
-
+    
     @Test
-    public void getProductsTest() {
+    public void sriptTest() throws ServiceException{
         List<Integer> ids = Arrays.asList(1, 2, 3, 4, 5);
 
         List<Product> expectedProducts = simpleFacade.getProducts(ids);
-
-        Command<List<Product>> remoteCommand = new GetProducts(new Forward<List<Integer>>(ids));
-
-        remoteFacadeHelper.executeRemotely(remoteCommand);
-
-        assertEquals(remoteCommand.getResult(), expectedProducts);
+        
+        ApplicationContext context = new ClassPathXmlApplicationContext("client-beans.xml");
+        ScriptFacade f = context.getBean("scriptFacade", ScriptFacade.class);
+        List<Product> scriptResult = (List)f.runScript("//groovy script\n"
+                + "def resultList = []\n"
+                + "for(id in [1,2,3,4,5]){\n"
+                + "   tmpProduct = productService.getProductByID(id) \n"
+                + "   if(tmpProduct.id != 0){ \n  "
+                + "      resultList.add(tmpProduct)\n"
+                + "   }\n"
+                + "}\n"
+                + "resultList\n");
+        
+        assertEquals(scriptResult, expectedProducts);
     }
-
-    @Test
-    public void FindStoresWithProductsTest() {
-        List<Integer> ids = Arrays.asList(1, 2, 3, 4, 5);
-
-        List<Store> expectedStores = simpleFacade.findStoresWithProducts(ids);
-
-        Command<List<Product>> existingProducts = new GetProducts(new Forward<List<Integer>>(ids));
-
-        TransformList<Product, Integer> idsOfexistingProducts =
-                new TransformList<Product, Integer>(existingProducts, new GetPropertyFunc<Product, Integer>("id"));
-
-        FindAppropriateStores resultStoresCommand = new FindAppropriateStores(idsOfexistingProducts);
-
-        remoteFacadeHelper.executeRemotely(resultStoresCommand, existingProducts);
-
-        assertEquals(expectedStores, resultStoresCommand.getResult());
-    }
-
-    
 }
