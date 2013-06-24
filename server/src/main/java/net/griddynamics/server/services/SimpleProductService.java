@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Set;
 import net.griddynamics.api.approach3.Product;
@@ -23,20 +25,13 @@ public class SimpleProductService implements ProductService {
 
     
     public SimpleProductService() {
-        init();
+        //init();
     }
     
     private void init(){
-        FileReader sourceFileReader;
-        try {
-            String sourceName = "prods.txt";      
-            sourceFileReader = new FileReader(sourceName);
-        } catch (FileNotFoundException ex){
-            throw new RuntimeException(ex);
-        }
-        
+        InputStream storeStream = getClass().getResourceAsStream("/stores.txt");
         try {            
-            BufferedReader br = new BufferedReader(sourceFileReader);
+            BufferedReader br = new BufferedReader(new InputStreamReader(storeStream));
             for (String line = br.readLine();  line != null; line = br.readLine()) {
                 String[] res = line.split(":");
                 int id = Integer.parseInt(res[0].trim());

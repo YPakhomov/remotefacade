@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,29 +20,23 @@ import net.griddynamics.api.approach3.servicesinterfaces.StoreService;
  *
  * @author one
  */
-public class SimpleStoreService implements StoreService{
+public class SimpleStoreService implements StoreService {
 
     private static final Set<Store> stores = new HashSet<Store>();
     private static final Store NOT_FOUND = new Store(0, "Not Found!", "None", Collections.EMPTY_SET);
-        
-    public SimpleStoreService(){
-        init();
+
+    public SimpleStoreService() {
+        //init();
     }
 
     private void init() {
-        FileReader sourceFileReader;
+        InputStream prodStream;
+        prodStream = getClass().getResourceAsStream("/prods.txt");
         try {
-            String sourceName = "stores.txt";
-            sourceFileReader = new FileReader(sourceName);
-        } catch (FileNotFoundException ex) {
-            throw new RuntimeException(ex);
-        }
-
-        try {
-            BufferedReader br = new BufferedReader(sourceFileReader);
+            BufferedReader br = new BufferedReader(new InputStreamReader(prodStream));
             for (String line = br.readLine(); line != null; line = br.readLine()) {
                 String[] res = line.split(":");
-                
+
                 int id = Integer.parseInt(res[0].trim());
                 String name = res[1].trim();
                 String location = res[2].trim();
@@ -65,11 +61,12 @@ public class SimpleStoreService implements StoreService{
         }
         return NOT_FOUND;
     }
-    
+
     @Override
     public Set<Store> getAllStores() {
-        if(stores == null)
+        if (stores == null) {
             return Collections.EMPTY_SET;
+        }
         return new HashSet<Store>(stores);
     }
 }

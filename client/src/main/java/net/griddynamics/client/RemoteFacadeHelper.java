@@ -18,15 +18,22 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author one
  */
 public class RemoteFacadeHelper {
+    
+    private ApplicationContext context;
+    
+    public RemoteFacadeHelper() {
+        context = new ClassPathXmlApplicationContext("client-beans.xml");
+    }
+    
     public void executeRemotely(Command<?>... commands) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("client-beans.xml");
-        CommandFacade f = context.getBean("commandFacade", CommandFacade.class);
+        
+        CommandFacade facade = context.getBean("commandFacade", CommandFacade.class);
 
         List<Command<?>> incomeCommands = Arrays.asList(commands);
         
         CommandList commandsToServer = new CommandList(incomeCommands);
 
-        Command<List<Command<?>>> resultCommand = f.executeRemotely(commandsToServer);
+        Command<List<Command<?>>> resultCommand = facade.executeRemotely(commandsToServer);
         List<Command<?>> resultCommandList = resultCommand.getResult();
         
         for (Iterator<Command<?>> resultIterator = resultCommandList.iterator(),
