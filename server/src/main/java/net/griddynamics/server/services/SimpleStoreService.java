@@ -5,8 +5,6 @@
 package net.griddynamics.server.services;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,7 +12,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import net.griddynamics.api.approach3.Store;
-import net.griddynamics.api.approach3.servicesinterfaces.StoreService;
+import net.griddynamics.api.servicesinterfaces.StoreService;
 
 /**
  *

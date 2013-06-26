@@ -5,8 +5,8 @@
 package net.griddynamics.server;
 
 import net.griddynamics.api.approach3.Context;
-import net.griddynamics.api.approach3.servicesinterfaces.ProductService;
-import net.griddynamics.api.approach3.servicesinterfaces.StoreService;
+import net.griddynamics.api.servicesinterfaces.ProductService;
+import net.griddynamics.api.servicesinterfaces.StoreService;
 import org.springframework.beans.factory.annotation.Required;
 
 /**

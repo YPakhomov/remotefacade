@@ -9,12 +9,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import net.griddynamics.api.Facade;
+import net.griddynamics.api.StoresWithProductsDTO;
 import net.griddynamics.api.approach3.Product;
 import net.griddynamics.api.approach3.Store;
-import net.griddynamics.api.approach3.servicesinterfaces.ProductService;
-import net.griddynamics.api.approach3.servicesinterfaces.StoreService;
+import net.griddynamics.api.servicesinterfaces.ProductService;
+import net.griddynamics.api.servicesinterfaces.StoreService;
 import net.griddynamics.server.services.SimpleProductService;
-import net.griddynamics.server.services.SimpleStoreService;
 import org.springframework.beans.factory.annotation.Required;
 
 /**
@@ -40,7 +40,7 @@ public class SimpleFacade implements Facade{
     }
 
     @Override
-    public List<Store> findStoresWithProducts(List<Integer> ids) {
+    public StoresWithProductsDTO findStoresWithProducts(List<Integer> ids) {
         Set<Store> stores = storeService.getAllStores();
         Set<Product> products = new HashSet<Product>(getProducts(ids));
         
@@ -59,7 +59,7 @@ public class SimpleFacade implements Facade{
                 resultStores.add(s);
             }
         }
-        return resultStores;
+        return new StoresWithProductsDTO(new ArrayList<Product>(products), resultStores);
     }
     
     @Required

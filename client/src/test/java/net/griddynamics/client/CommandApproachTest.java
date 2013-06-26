@@ -4,12 +4,10 @@
  */
 package net.griddynamics.client;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import net.griddynamics.api.Facade;
+import net.griddynamics.api.StoresWithProductsDTO;
 import net.griddynamics.api.approach3.Product;
 import net.griddynamics.api.approach3.Store;
 import net.griddynamics.api.approach3.commands.Command;
@@ -53,7 +51,6 @@ public class CommandApproachTest {
         WebAppContext root = new WebAppContext();
         
         root.setWar("./../server/target/server-1.0-SNAPSHOT.war");
-        //root.setWar("./../server/src/main/webapp"); // some classpath problems
         root.setContextPath("/server");
         
         server.setHandler(root);
@@ -76,31 +73,24 @@ public class CommandApproachTest {
     @Test
     public void getProductsTest() {
         List<Integer> ids = Arrays.asList(1, 2, 3, 4, 5);
-
         List<Product> expectedProducts = simpleFacade.getProducts(ids);
-
         Command<List<Product>> remoteCommand = new GetProducts(new Forward<List<Integer>>(ids));
-
         remoteFacadeHelper.executeRemotely(remoteCommand);
-
         assertEquals(remoteCommand.getResult(), expectedProducts);
     }
 
     @Test
     public void FindStoresWithProductsTest() {
         List<Integer> ids = Arrays.asList(1, 2, 3, 4, 5);
-
-        List<Store> expectedStores = simpleFacade.findStoresWithProducts(ids);
+        StoresWithProductsDTO storesWithProducts = simpleFacade.findStoresWithProducts(ids);
+        List<Store> expectedStores = storesWithProducts.getStores();
 
         Command<List<Product>> existingProducts = new GetProducts(new Forward<List<Integer>>(ids));
-
         TransformList<Product, Integer> idsOfexistingProducts =
                 new TransformList<Product, Integer>(existingProducts, new GetPropertyFunc<Product, Integer>("id"));
-
         FindAppropriateStores resultStoresCommand = new FindAppropriateStores(idsOfexistingProducts);
 
         remoteFacadeHelper.executeRemotely(resultStoresCommand, existingProducts);
-
         assertEquals(expectedStores, resultStoresCommand.getResult());
     }
 

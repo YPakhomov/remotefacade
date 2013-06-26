@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.griddynamics.api.approach3.servicesinterfaces;
+package net.griddynamics.api.servicesinterfaces;
 
 import java.util.Set;
 import net.griddynamics.api.approach3.Product;

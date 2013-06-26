@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.Set;
 import net.griddynamics.api.approach3.Product;
-import net.griddynamics.api.approach3.servicesinterfaces.ProductService;
+import net.griddynamics.api.servicesinterfaces.ProductService;
 
 /**
  *

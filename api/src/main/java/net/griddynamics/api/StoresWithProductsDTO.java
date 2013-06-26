@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.griddynamics.api;
 
 import java.io.Serializable;
@@ -14,12 +10,12 @@ import net.griddynamics.api.approach3.Store;
  *
  * @author one
  */
-public class ProductsWithStoresDTO implements Serializable{
+public class StoresWithProductsDTO implements Serializable{
     
     private List<Product> products;
     private List<Store> stores;
 
-    public ProductsWithStoresDTO(List<Product> products, List<Store> stores) {
+    public StoresWithProductsDTO(List<Product> products, List<Store> stores) {
         this.products = products;
         this.stores = stores;
     }
@@ -31,4 +27,11 @@ public class ProductsWithStoresDTO implements Serializable{
     public List<Store> getStores() {
         return new ArrayList<Store>(stores);
     }
+
+    @Override
+    public String toString() {
+        return "StoresWithProductsDTO{" + "products=" + products + ", stores=" + stores + '}';
+    }
+    
+    
 }
